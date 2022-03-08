@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'info.solidsoft.pitest' version "1.7.0"
+}
+
+group = 'poc'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+}
+
+pitest {
+    pitestVersion = "1.7.4"
+    junit5PluginVersion = '0.15'
+    testPlugin = "junit5"
+    targetClasses = ['poc.*']
+    outputFormats = ['XML', 'HTML']
+    mutationThreshold = 100
+    coverageThreshold = 100
+    reportDir = 'build/reports/mutation-tests-results' as File
+//    timestampedReports = false
+//    failWhenNoMutations = true
+    historyInputLocation = 'build/history.pitest'
+    historyOutputLocation = 'build/history.pitest'
+//    verbose = true
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
